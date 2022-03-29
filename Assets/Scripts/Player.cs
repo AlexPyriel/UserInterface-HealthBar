@@ -41,11 +41,13 @@ public class Player : MonoBehaviour
         {
             _health = _minHealth;
             _audioSource.PlayOneShot(_die);
+            _animator.SetTrigger(PlayerAnimations.Die);
         }
         else
         {
             _health -= _damageAmount;
             _audioSource.PlayOneShot(_hurt);
+            _animator.SetTrigger(PlayerAnimations.Hurt);
         }
 
         OnHealthUpdated?.Invoke(_health);
@@ -53,10 +55,16 @@ public class Player : MonoBehaviour
 
     public void ApplyHeal()
     {
-        if (_health + _healAmount > _maxHealth)
+        if (_health + _healAmount >= _maxHealth)
+        {
             _health = _maxHealth;
+            _animator.SetTrigger(PlayerAnimations.Recover);
+        }
         else
+        {
             _health += _healAmount;
+            _animator.SetTrigger(PlayerAnimations.Heal);
+        }
 
         OnHealthUpdated?.Invoke(_health);
 
