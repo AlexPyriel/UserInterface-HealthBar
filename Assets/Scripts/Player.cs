@@ -12,22 +12,19 @@ public class Player : MonoBehaviour
 
     private Animator _animator;
     private AudioSource _audioSource;
-    // private Vector3 _startPosition;
     private int _maxHealth = 100;
     private int _minHealth = 0;
     private int _health = 100;
     private int _damageAmount = 10;
     private int _healAmount = 10;
 
-    // public int Health { get => _health; }
-
+    public bool IsDead => _health <= 0;
     public static Action<int> OnHealthUpdated;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-        // _startPosition = transform.position;
     }
 
     private void Start()
@@ -37,17 +34,19 @@ public class Player : MonoBehaviour
 
     public void TakeDamage()
     {
+        if (IsDead) return;
+
         if (_health - _damageAmount <= _minHealth)
         {
             _health = _minHealth;
-            _audioSource.PlayOneShot(_die);
             _animator.SetTrigger(PlayerAnimations.Die);
+            _audioSource.PlayOneShot(_die);
         }
         else
         {
             _health -= _damageAmount;
-            _audioSource.PlayOneShot(_hurt);
             _animator.SetTrigger(PlayerAnimations.Hurt);
+            _audioSource.PlayOneShot(_hurt);
         }
 
         OnHealthUpdated?.Invoke(_health);
@@ -55,6 +54,8 @@ public class Player : MonoBehaviour
 
     public void ApplyHeal()
     {
+        if (IsDead) return;
+
         if (_health + _healAmount >= _maxHealth)
         {
             _health = _maxHealth;
@@ -67,7 +68,13 @@ public class Player : MonoBehaviour
         }
 
         OnHealthUpdated?.Invoke(_health);
-
         _audioSource.PlayOneShot(_heal);
+    }
+
+    public void Resurrect()
+    {
+        _health = _maxHealth;
+        _animator.SetTrigger(PlayerAnimations.Resurrect);
+        OnHealthUpdated?.Invoke(_health);
     }
 }
