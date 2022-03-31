@@ -18,31 +18,31 @@ public class PlayerAudio : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.Dead += OnPlayerDied;
-        _player.Hurt += OnPlayerHurt;
-        _player.Healed += OnPlayerHealed;
-        _player.Recovered += OnPlayerHealed;
+        _player.Dead += OnDead;
+        _player.Hurt += OnHurt;
+        _player.Healed += OnHealed;
+        _player.Recovered += OnHealed;
     }
 
     private void OnDisable()
     {
-        _player.Dead -= OnPlayerDied;
-        _player.Hurt -= OnPlayerHurt;
-        _player.Healed -= OnPlayerHealed;
-        _player.Recovered -= OnPlayerHealed;
+        _player.Dead -= OnDead;
+        _player.Hurt -= OnHurt;
+        _player.Healed -= OnHealed;
+        _player.Recovered -= OnHealed;
     }
 
-    private void OnPlayerDied()
+    private void OnDead()
     {
         _audioSource.PlayOneShot(_die);
     }
 
-    private void OnPlayerHurt()
+    private void OnHurt()
     {
         _audioSource.PlayOneShot(_hurt);
     }
 
-    private void OnPlayerHealed()
+    private void OnHealed()
     {
         _audioSource.PlayOneShot(_heal);
     }

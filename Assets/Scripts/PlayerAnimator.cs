@@ -15,43 +15,43 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.Dead += OnPlayerDied;
-        _player.Hurt += OnPlayerHurt;
-        _player.Healed += OnPlayerHealed;
-        _player.Recovered += OnPlayerRecovered;
-        _player.Ressurected += OnPlayerRessurected;
+        _player.Dead += OnDead;
+        _player.Hurt += OnHurt;
+        _player.Healed += OnHealed;
+        _player.Recovered += OnRecovered;
+        _player.Ressurected += OnRessurected;
     }
 
     private void OnDisable()
     {
-        _player.Dead -= OnPlayerDied;
-        _player.Hurt -= OnPlayerHurt;
-        _player.Healed -= OnPlayerHealed;
-        _player.Recovered -= OnPlayerRecovered;
-        _player.Ressurected -= OnPlayerRessurected;
+        _player.Dead -= OnDead;
+        _player.Hurt -= OnHurt;
+        _player.Healed -= OnHealed;
+        _player.Recovered -= OnRecovered;
+        _player.Ressurected -= OnRessurected;
     }
 
-    private void OnPlayerDied()
+    private void OnDead()
     {
         _animator.SetTrigger(PlayerAnimations.Die);
     }
 
-    private void OnPlayerHurt()
+    private void OnHurt()
     {
         _animator.SetTrigger(PlayerAnimations.Hurt);
     }
 
-    private void OnPlayerHealed()
+    private void OnHealed()
     {
         _animator.SetTrigger(PlayerAnimations.Heal);
     }
 
-    private void OnPlayerRecovered()
+    private void OnRecovered()
     {
         _animator.SetTrigger(PlayerAnimations.Recover);
     }
 
-    private void OnPlayerRessurected()
+    private void OnRessurected()
     {
         _animator.SetTrigger(PlayerAnimations.Resurrect);
     }

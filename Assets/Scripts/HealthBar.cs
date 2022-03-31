@@ -20,15 +20,15 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.HealthUpdated += UpdateView;
+        _player.HealthUpdated += OnHealthUpdated;
     }
 
     private void OnDisable()
     {
-        _player.HealthUpdated -= UpdateView;
+        _player.HealthUpdated -= OnHealthUpdated;
     }
 
-    private void UpdateView(int health)
+    private void OnHealthUpdated(int health)
     {
         if (_currentValue == 0)
             _slider.value = health;

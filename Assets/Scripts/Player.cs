@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -8,12 +8,12 @@ public class Player : MonoBehaviour
     private int _health = 100;
 
     public bool IsDead => _health <= 0;
-    public event Action<int> HealthUpdated;
-    public event Action Hurt;
-    public event Action Healed;
-    public event Action Dead;
-    public event Action Recovered;
-    public event Action Ressurected;
+    public event UnityAction<int> HealthUpdated;
+    public event UnityAction Hurt;
+    public event UnityAction Healed;
+    public event UnityAction Dead;
+    public event UnityAction Recovered;
+    public event UnityAction Ressurected;
 
     public int MaxHealth => _maxHealth;
 
