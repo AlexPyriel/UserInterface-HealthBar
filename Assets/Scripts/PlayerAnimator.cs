@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 
 public class PlayerAnimator : MonoBehaviour
 {
+    [SerializeField] private Player _player;
+
     private Animator _animator;
 
     private void Awake()
@@ -15,20 +15,20 @@ public class PlayerAnimator : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.Dead += OnPlayerDied;
-        Player.Hurt += OnPlayerHurt;
-        Player.Healed += OnPlayerHealed;
-        Player.Recovered += OnPlayerRecovered;
-        Player.Ressurected += OnPlayerRessurected;
+        _player.Dead += OnPlayerDied;
+        _player.Hurt += OnPlayerHurt;
+        _player.Healed += OnPlayerHealed;
+        _player.Recovered += OnPlayerRecovered;
+        _player.Ressurected += OnPlayerRessurected;
     }
 
     private void OnDisable()
     {
-        Player.Dead -= OnPlayerDied;
-        Player.Hurt -= OnPlayerHurt;
-        Player.Healed -= OnPlayerHealed;
-        Player.Recovered -= OnPlayerRecovered;
-        Player.Ressurected -= OnPlayerRessurected;
+        _player.Dead -= OnPlayerDied;
+        _player.Hurt -= OnPlayerHurt;
+        _player.Healed -= OnPlayerHealed;
+        _player.Recovered -= OnPlayerRecovered;
+        _player.Ressurected -= OnPlayerRessurected;
     }
 
     private void OnPlayerDied()

@@ -5,6 +5,7 @@ using TMPro;
 
 public class HealthBar : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private Slider _slider;
     [SerializeField] private TextMeshProUGUI _text;
 
@@ -12,14 +13,19 @@ public class HealthBar : MonoBehaviour
     private float _recoveryRate = 50f;
     private Coroutine _activeCoroutine;
 
+    private void Awake()
+    {
+        _slider.maxValue = _player.MaxHealth;
+    }
+
     private void OnEnable()
     {
-        Player.HealthUpdated += UpdateView;
+        _player.HealthUpdated += UpdateView;
     }
 
     private void OnDisable()
     {
-        Player.HealthUpdated -= UpdateView;
+        _player.HealthUpdated -= UpdateView;
     }
 
     private void UpdateView(int health)

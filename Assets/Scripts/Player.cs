@@ -8,12 +8,14 @@ public class Player : MonoBehaviour
     private int _health = 100;
 
     public bool IsDead => _health <= 0;
-    public static Action<int> HealthUpdated;
-    public static Action Hurt;
-    public static Action Healed;
-    public static Action Dead;
-    public static Action Recovered;
-    public static Action Ressurected;
+    public event Action<int> HealthUpdated;
+    public event Action Hurt;
+    public event Action Healed;
+    public event Action Dead;
+    public event Action Recovered;
+    public event Action Ressurected;
+
+    public int MaxHealth => _maxHealth;
 
     private void Start()
     {

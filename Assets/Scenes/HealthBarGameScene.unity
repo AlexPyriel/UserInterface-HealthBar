@@ -869,6 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ca930290244490ca531f57b783d45f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 716707113}
   _slider: {fileID: 536365993}
   _text: {fileID: 33675180}
 --- !u!1 &586164443
@@ -1145,6 +1146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883562323a7ca49738b84d6fded1a95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 716707113}
   _die: {fileID: 8300000, guid: 95010d4093b7b457689814bc951dd5c6, type: 3}
   _hurt: {fileID: 8300000, guid: ad4b9346459c34871a03eefe4042defa, type: 3}
   _heal: {fileID: 8300000, guid: fd2ab5386dc0145ae992408491a20bea, type: 3}
@@ -1160,6 +1162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2065b2f5f4804e1186b4f7985b39641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 716707113}
 --- !u!1001 &755040973
 PrefabInstance:
   m_ObjectHideFlags: 0

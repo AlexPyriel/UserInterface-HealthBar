@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 
 public class PlayerAudio : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private AudioClip _die;
     [SerializeField] private AudioClip _hurt;
     [SerializeField] private AudioClip _heal;
@@ -19,18 +18,18 @@ public class PlayerAudio : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.Dead += OnPlayerDied;
-        Player.Hurt += OnPlayerHurt;
-        Player.Healed += OnPlayerHealed;
-        Player.Recovered += OnPlayerHealed;
+        _player.Dead += OnPlayerDied;
+        _player.Hurt += OnPlayerHurt;
+        _player.Healed += OnPlayerHealed;
+        _player.Recovered += OnPlayerHealed;
     }
 
     private void OnDisable()
     {
-        Player.Dead -= OnPlayerDied;
-        Player.Hurt -= OnPlayerHurt;
-        Player.Healed -= OnPlayerHealed;
-        Player.Recovered -= OnPlayerHealed;
+        _player.Dead -= OnPlayerDied;
+        _player.Hurt -= OnPlayerHurt;
+        _player.Healed -= OnPlayerHealed;
+        _player.Recovered -= OnPlayerHealed;
     }
 
     private void OnPlayerDied()
