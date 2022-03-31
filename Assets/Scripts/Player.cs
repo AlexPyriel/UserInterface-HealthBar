@@ -1,80 +1,64 @@
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AudioSource))]
+/*
+2. Работу со здоровьем следует отделить от работы с анимациями, так как это разные ответственности. 
+В этом плане работа с анимациями больше похожа на работу HealthBar'а, так как и то и то должно реагировать на игрока через его событие 
+*/
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private AudioClip _die;
-    [SerializeField] private AudioClip _hurt;
-    [SerializeField] private AudioClip _heal;
-
-    private Animator _animator;
-    private AudioSource _audioSource;
     private int _maxHealth = 100;
     private int _minHealth = 0;
     private int _health = 100;
-    private int _damageAmount = 10;
-    private int _healAmount = 10;
 
     public bool IsDead => _health <= 0;
-    public static Action<int> OnHealthUpdated;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
-    }
+    public static Action<int> HealthUpdated;
+    public static Action Hurt;
+    public static Action Healed;
+    public static Action Dead;
+    public static Action Recovered;
+    public static Action Ressurected;
 
     private void Start()
     {
-        OnHealthUpdated?.Invoke(_health);
+        HealthUpdated?.Invoke(_health);
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damageAmount)
     {
-        if (IsDead) return;
+        if (IsDead)
+            return;
 
-        if (_health - _damageAmount <= _minHealth)
-        {
-            _health = _minHealth;
-            _animator.SetTrigger(PlayerAnimations.Die);
-            _audioSource.PlayOneShot(_die);
-        }
+        _health = Mathf.Clamp(_health - damageAmount, _minHealth, _maxHealth);
+
+        if (IsDead)
+            Dead?.Invoke();
         else
-        {
-            _health -= _damageAmount;
-            _animator.SetTrigger(PlayerAnimations.Hurt);
-            _audioSource.PlayOneShot(_hurt);
-        }
+            Hurt?.Invoke();
 
-        OnHealthUpdated?.Invoke(_health);
+        HealthUpdated?.Invoke(_health);
     }
 
-    public void ApplyHeal()
+    public void Heal(int healAmount)
     {
-        if (IsDead) return;
+        if (IsDead)
+            return;
 
-        if (_health + _healAmount >= _maxHealth)
-        {
-            _health = _maxHealth;
-            _animator.SetTrigger(PlayerAnimations.Recover);
-        }
+        _health = Mathf.Clamp(_health + healAmount, _minHealth, _maxHealth);
+
+        if (_health == _maxHealth)
+            Recovered.Invoke();
         else
-        {
-            _health += _healAmount;
-            _animator.SetTrigger(PlayerAnimations.Heal);
-        }
+            Healed?.Invoke();
 
-        OnHealthUpdated?.Invoke(_health);
-        _audioSource.PlayOneShot(_heal);
+        HealthUpdated?.Invoke(_health);
     }
 
     public void Resurrect()
     {
         _health = _maxHealth;
-        _animator.SetTrigger(PlayerAnimations.Resurrect);
-        OnHealthUpdated?.Invoke(_health);
+        Ressurected?.Invoke();
+        HealthUpdated?.Invoke(_health);
     }
 }
